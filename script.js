@@ -215,13 +215,6 @@ function copyHTML() {
     .catch(() => showToast('📋 HTML copiado!'));
 }
 
-function copySignature() {
-  if (!requireSchool()) return;
-  copyToClipboard(getSignatureHTML(), true)
-    .then(() => showToast('✅ Assinatura copiada! Cole diretamente no cliente de e-mail.'))
-    .catch(() => showToast('📋 Assinatura copiada!'));
-}
-
 function downloadPNG() {
   const escola = document.getElementById('in-escola').value || 'escolapias';
 
