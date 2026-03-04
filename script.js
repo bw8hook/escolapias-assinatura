@@ -203,11 +203,12 @@ function copySignature() {
 }
 
 function downloadPNG() {
+  const escola = document.getElementById('in-escola').value || 'escolapias';
   html2canvas(document.getElementById('signature-preview'), {
     scale: 2, useCORS: true, allowTaint: true
   }).then(canvas => {
     const a = document.createElement('a');
-    a.download = 'assinatura-escolapias-' + escola + '.png';
+    a.download = 'assinatura-' + escola + '.png';
     a.href = canvas.toDataURL('image/png');
     a.click();
   });
