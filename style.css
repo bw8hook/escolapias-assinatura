@@ -398,7 +398,6 @@ header p {
 }
 
 .btn-secondary {
-  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
   background: linear-gradient(135deg, var(--accent), #6fa8ff);
