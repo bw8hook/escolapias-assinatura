@@ -162,7 +162,7 @@ function getSignatureHTML() {
     : '';
 
   const rightCol = socials
-    ? `<td style="padding:32px 40px;vertical-align:middle;text-align:center;">${socials}</td>`
+    ? `<td style="padding: 60px 200px 60px 80px;vertical-align:middle;text-align:center;">${socials}</td>`
     : '';
 
   return `<table cellpadding="0" cellspacing="0" border="0" style="width:900px;height:300px;${bgStyle}border-radius:12px;font-family:Roboto,Arial,sans-serif;">
