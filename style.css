@@ -1,0 +1,446 @@
+/* ============================================================
+   ESCOLAS ESCOLÁPIAS — Gerador de Assinatura de E-mail
+   style2.css
+   ============================================================ */
+
+:root {
+  --bg:       #0f1117;
+  --surface:  #1a1d27;
+  --surface2: #22263a;
+  --border:   #2e3350;
+  --accent:   #4f8ef7;
+  --text:     #e8eaf0;
+  --muted:    #7c82a0;
+  --radius:   16px;
+}
+
+/* ─── Reset ─────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Body ───────────────────────────────────────────────── */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 32px 24px;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+header h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4f8ef7, #f7c94f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+header p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ─── Grid ───────────────────────────────────────────────── */
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+/* ─── Card ───────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.card-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* ─── Checkboxes ─────────────────────────────────────────── */
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.checkbox-item:hover { background: var(--surface2); }
+.checkbox-item input[type="checkbox"] { display: none; }
+
+.check-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.checkbox-item input:checked ~ .check-box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.checkbox-item input:checked ~ .check-box::after {
+  content: '✓';
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.check-label      { font-size: 0.9rem; color: var(--text); }
+.check-label span { color: var(--muted); font-size: 0.78rem; display: block; }
+
+/* Separador visual antes do checkbox da barra */
+.checkbox-item.divider-option {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  padding-top: 16px;
+}
+
+/* ─── Inputs ─────────────────────────────────────────────── */
+.input-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.field input,
+.field select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  appearance: none;
+}
+
+.field input:focus,
+.field select:focus { border-color: var(--accent); }
+
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237c82a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.field-hidden { display: none !important; }
+
+/* ─── Seletor de escola ──────────────────────────────────── */
+.school-select-wrap {
+  background: linear-gradient(135deg, rgba(79,142,247,0.12), rgba(247,201,79,0.08));
+  border: 1px solid rgba(79,142,247,0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.school-select-wrap > label {
+  font-size: 0.78rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ─── Preview ────────────────────────────────────────────── */
+.preview-section {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+}
+
+.section-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.preview-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ─── Assinatura ─────────────────────────────────────────── */
+#signature-preview {
+  width: 900px;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  flex-shrink: 0;
+}
+
+.sig-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1a3a6b;
+}
+
+.sig-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sig-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  padding: 60px 200px 60px 80px;
+  gap: 40px;
+}
+
+/* Coluna esquerda */
+.sig-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sig-name {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 110%;
+  color: #ffffff;
+}
+
+.sig-role {
+  font-size: 16px;
+  font-weight: 500;
+  color: #F0D080;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.sig-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.sig-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.sig-contact-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* Divisor vertical — oculto por padrão quando cb-divider desmarcado */
+.sig-divider {
+  width: 1px;
+  height: 220px;
+  background: rgba(201, 168, 76, 0.6);
+  flex-shrink: 0;
+}
+
+/* Coluna direita (só redes sociais) */
+.sig-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  gap: 14px;
+  padding-bottom: 20px;
+  min-width: 120px;
+}
+
+.sig-socials {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sig-social-link {
+  opacity: 0.85;
+  transition: opacity 0.15s;
+  text-decoration: none;
+}
+
+.sig-social-link:hover { opacity: 1; }
+
+.sig-social-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sig-social-icon svg { width: 14px; height: 14px; }
+
+/* ─── Botões ─────────────────────────────────────────────── */
+.actions {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #6fa8ff);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn:hover  { transform: translateY(-2px); filter: brightness(1.1); }
+.btn:active { transform: translateY(0);    filter: brightness(1);   }
+
+/* ─── Toast ──────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #1e3a2f;
+  border: 1px solid #2d6a4f;
+  color: #52b788;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  z-index: 200;
+  white-space: nowrap;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ─── Responsivo ─────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  #signature-preview { transform: scale(0.75); transform-origin: center; }
+  .preview-wrapper   { height: 240px; }
+}
+
+@media (max-width: 900px) {
+  .app-grid          { grid-template-columns: 1fr; }
+  #signature-preview { transform: scale(0.5); transform-origin: center; }
+  .preview-wrapper   { height: 170px; }
+  .actions           { flex-direction: column; align-items: center; }
+}

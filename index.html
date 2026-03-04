@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Assinatura – Escolas Escolápias</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Roboto:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Assinatura de Email</h1>
+  <p>Escolas Escolápias — Configure, visualize e exporte sua assinatura profissional</p>
+</header>
+
+<div class="app-grid">
+
+  <!-- Card 1: Campos Visíveis -->
+  <div class="card">
+    <div class="card-title">Campos Visíveis</div>
+    <div class="checkbox-list">
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-nome" checked onchange="toggleField('f-nome', this)">
+        <div class="check-box"></div>
+        <span class="check-label">Nome<span>Exibir nome completo</span></span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-cargo" checked onchange="toggleField('f-cargo', this)">
+        <div class="check-box"></div>
+        <span class="check-label">Cargo<span>Título ou função</span></span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-tel" checked onchange="toggleField('f-tel', this)">
+        <div class="check-box"></div>
+        <span class="check-label">Telefone</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-whats" onchange="toggleField('f-whats', this)">
+        <div class="check-box"></div>
+        <span class="check-label">WhatsApp</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-email" onchange="toggleField('f-email', this)">
+        <div class="check-box"></div>
+        <span class="check-label">E-mail</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-end" checked onchange="toggleField('f-end', this)">
+        <div class="check-box"></div>
+        <span class="check-label">Endereço</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-web" onchange="toggleField('f-web', this)">
+        <div class="check-box"></div>
+        <span class="check-label">Website</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-social" checked onchange="toggleField('f-social', this)">
+        <div class="check-box"></div>
+        <span class="check-label">Redes Sociais</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="cb-divider" checked onchange="updatePreview()">
+        <div class="check-box"></div>
+        <span class="check-label">Barra divisória<span>Linha vertical na assinatura</span></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Card 2: Informações -->
+  <div class="card">
+    <div class="card-title">Informações</div>
+
+    <div class="school-select-wrap">
+      <label>🏫 Escola</label>
+      <select id="in-escola" onchange="updatePreview()">
+        <option value="">Selecione a escola...</option>
+        <option value="madre-paula">Colégio Madre Paula Montal</option>
+        <option value="sao-jose">Colégio São José</option>
+      </select>
+    </div>
+
+    <div class="input-list">
+      <div id="f-nome" class="field">
+        <label>Nome</label>
+        <input type="text" id="in-nome" placeholder="Maria Fernanda Silva" oninput="updatePreview()">
+      </div>
+      <div id="f-cargo" class="field">
+        <label>Cargo</label>
+        <input type="text" id="in-cargo" placeholder="Coordenadora Pedagógica" oninput="updatePreview()">
+      </div>
+      <div id="f-tel" class="field">
+        <label>Telefone</label>
+        <input type="text" id="in-tel" placeholder="(11) 3456-7890" oninput="updatePreview()">
+      </div>
+      <div id="f-whats" class="field field-hidden">
+        <label>WhatsApp</label>
+        <input type="text" id="in-whats" placeholder="(11) 99876-5432" oninput="updatePreview()">
+      </div>
+      <div id="f-email" class="field field-hidden">
+        <label>E-mail</label>
+        <input type="text" id="in-email" placeholder="maria@escola.org.br" oninput="updatePreview()">
+      </div>
+      <div id="f-end" class="field">
+        <label>Endereço</label>
+        <input type="text" id="in-end" placeholder="Rua das Flores, 123 – São Paulo, SP" oninput="updatePreview()">
+      </div>
+      <div id="f-web" class="field field-hidden">
+        <label>Website</label>
+        <input type="text" id="in-web" placeholder="www.escolasescolapias.org.br" oninput="updatePreview()">
+      </div>
+      <div id="f-social" class="field">
+        <label>Facebook (link)</label>
+        <input type="text" id="in-fb" placeholder="https://facebook.com/..." oninput="updatePreview()">
+        <label style="margin-top:8px">Instagram (link)</label>
+        <input type="text" id="in-ig" placeholder="https://instagram.com/..." oninput="updatePreview()">
+        <label style="margin-top:8px">Website/Globe (link)</label>
+        <input type="text" id="in-globe" placeholder="https://..." oninput="updatePreview()">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preview -->
+<div class="preview-section">
+  <div class="section-title">Preview da Assinatura</div>
+  <div class="preview-wrapper">
+    <div id="signature-preview">
+      <div class="sig-bg" id="sig-bg"></div>
+      <div class="sig-overlay"></div>
+      <div class="sig-content">
+
+        <!-- LEFT -->
+        <div class="sig-left">
+          <div class="sig-name" id="sig-name">Nome Completo</div>
+          <div class="sig-role" id="sig-role">Cargo / Função</div>
+          <div class="sig-contact">
+            <div class="sig-contact-item" id="sig-tel-row" style="display:none">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.01 4.18 2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <span id="sig-tel-text"></span>
+            </div>
+            <div class="sig-contact-item" id="sig-whats-row" style="display:none">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.998 2C6.48 2 2 6.48 2 12c0 1.779.463 3.449 1.27 4.9L2 22l5.237-1.241A10 10 0 0011.998 22c5.517 0 9.998-4.48 9.998-10S17.515 2 11.998 2zm0 18a7.96 7.96 0 01-4.076-1.12l-.293-.173-3.107.735.779-2.982-.19-.306A7.997 7.997 0 114 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+              <span id="sig-whats-text"></span>
+            </div>
+            <div class="sig-contact-item" id="sig-email-row" style="display:none">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span id="sig-email-text"></span>
+            </div>
+            <div class="sig-contact-item" id="sig-end-row" style="display:none">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span id="sig-end-text"></span>
+            </div>
+            <div class="sig-contact-item" id="sig-web-row" style="display:none">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+              <span id="sig-web-text"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIVIDER: controlado por cb-divider -->
+        <div class="sig-divider" id="sig-divider"></div>
+
+        <!-- RIGHT: só redes sociais, sem logo -->
+        <div class="sig-right" id="sig-right">
+          <div class="sig-socials" id="sig-socials">
+            <a id="soc-globe" class="sig-social-link" href="#" style="display:none">
+              <div class="sig-social-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+              </div>
+            </a>
+            <a id="soc-fb" class="sig-social-link" href="#" style="display:none">
+              <div class="sig-social-icon">
+                <svg viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+              </div>
+            </a>
+            <a id="soc-ig" class="sig-social-link" href="#" style="display:none">
+              <div class="sig-social-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Botões -->
+<div class="actions">
+  <button class="btn btn-secondary" onclick="copyHTML()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    Copiar HTML
+  </button>
+  <button class="btn btn-primary" onclick="copySignature()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+    Copiar Assinatura
+  </button>
+  <button class="btn btn-secondary" onclick="downloadPNG()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Baixar PNG
+  </button>
+</div>
+
+<div class="toast" id="toast">✅ Copiado com sucesso!</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
