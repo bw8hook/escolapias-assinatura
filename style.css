@@ -270,7 +270,6 @@ header p {
 .sig-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(5, 20, 60, 0.35);
   pointer-events: none;
 }
 
