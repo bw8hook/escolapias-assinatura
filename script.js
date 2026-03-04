@@ -13,11 +13,11 @@ const SCHOOLS = {
     label: 'Colégio São José Escolápias'
   },
   'filhas-de-maria': {
-    bg:    'https://raw.githubusercontent.com/bw8hook/escolapias-assinatura/refs/heads/main/assets/fundos/Filhas%20de%20Maria.png',
+    bg:    'https://raw.githubusercontent.com/bw8hook/escolapias-assinatura/refs/heads/main/assets/fundos/filhas-de-maria.png',
     label: 'Filhas de Maria Escolápias'
   },
   'centro-escolapio': {
-    bg:    'https://raw.githubusercontent.com/bw8hook/escolapias-assinatura/refs/heads/main/assets/fundos/Centro%20Escol%C3%A1pio.png',
+    bg:    'https://raw.githubusercontent.com/bw8hook/escolapias-assinatura/refs/heads/main/assets/fundos/centro-escolapio.png',
     label: 'Centro Escolápio Escolápias'
   },
   'assedef': {
