@@ -69,7 +69,7 @@ function updatePreview() {
   const showSocial  = document.getElementById('cb-social').checked;
   const showDivider = document.getElementById('cb-divider').checked;
 
-  /* Nome e Cargo */
+  // Nome e Cargo
   const nameEl = document.getElementById('sig-name');
   nameEl.textContent   = nome || 'Nome Completo';
   nameEl.style.display = showNome ? '' : 'none';
@@ -78,14 +78,14 @@ function updatePreview() {
   roleEl.textContent   = cargo || 'Cargo / Função';
   roleEl.style.display = showCargo ? '' : 'none';
 
-  /* Linhas de contato */
+  // Linhas de contato
   setRow('sig-tel-row',   'sig-tel-text',   tel,   showTel);
   setRow('sig-whats-row', 'sig-whats-text', whats, showWhats);
   setRow('sig-email-row', 'sig-email-text', email, showEmail);
   setRow('sig-end-row',   'sig-end-text',   end,   showEnd);
   setRow('sig-web-row',   'sig-web-text',   web,   showWeb);
 
-  /* Fundo da escola */
+  // Fundo da escola
   const sigBg = document.getElementById('sig-bg');
   if (escola && SCHOOLS[escola]) {
     sigBg.style.backgroundImage    = `url('${SCHOOLS[escola].bg}')`;
@@ -95,14 +95,13 @@ function updatePreview() {
     sigBg.style.backgroundImage = 'none';
   }
 
-  /* Barra divisória */
+  // Barra divisória
   document.getElementById('sig-divider').style.display = showDivider ? '' : 'none';
 
-  /* Coluna direita: só aparece se tiver redes ou divisor ativo */
-  const sigRight = document.getElementById('sig-right');
-  sigRight.style.display = showSocial ? '' : 'none';
+  // Coluna direita
+  document.getElementById('sig-right').style.display = showSocial ? '' : 'none';
 
-  /* Redes sociais */
+  // Redes sociais
   const socFb    = document.getElementById('soc-fb');
   const socIg    = document.getElementById('soc-ig');
   const socGlobe = document.getElementById('soc-globe');
@@ -141,7 +140,7 @@ function getSignatureHTML() {
     ? `background:url('${bgSrc}') center/cover no-repeat;`
     : 'background:#1a3a6b;';
 
-  const overlay  = 'background:rgba(5,20,60,0.35);';
+  const overlay   = 'background:rgba(5,20,60,0.35);';
   const csContact = 'padding:2px 0;font-size:13px;color:rgba(255,255,255,0.9);';
 
   let rows = '';
@@ -159,7 +158,6 @@ function getSignatureHTML() {
     if (ig)    socials += `<a href="${ig}"    style="${csSoc}">&#128247;</a>`;
   }
 
-  /* Coluna do divisor + coluna direita só se necessário */
   const dividerCol = showDivider
     ? `<td style="width:1px;padding:40px 0;${overlay}"><div style="width:1px;height:220px;background:rgba(201,168,76,0.6);"></div></td>`
     : '';
@@ -181,36 +179,75 @@ function getSignatureHTML() {
 </table>`;
 }
 
-/* ─── Ações ─────────────────────────────────────────────────── */
+/* ─── Copiar para clipboard com fallback robusto ────────────── */
+function copyToClipboard(text, asHtml) {
+  // Tenta API moderna (funciona em HTTPS / localhost)
+  if (navigator.clipboard) {
+    if (asHtml && window.ClipboardItem) {
+      const blob = new Blob([text], { type: 'text/html' });
+      return navigator.clipboard.write([new ClipboardItem({ 'text/html': blob })])
+        .catch(() => navigator.clipboard.writeText(text));
+    }
+    return navigator.clipboard.writeText(text);
+  }
+
+  // Fallback: execCommand (funciona em file://)
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try {
+    document.execCommand('copy');
+  } catch(e) {
+    console.error('Erro ao copiar:', e);
+  }
+  document.body.removeChild(ta);
+  return Promise.resolve();
+}
+
+/* ─── Ações dos botões ──────────────────────────────────────── */
 function copyHTML() {
   if (!requireSchool()) return;
-  navigator.clipboard.writeText(getSignatureHTML()).then(() => {
-    showToast('📋 HTML copiado! Cole no campo de assinatura do seu e-mail.');
-  });
+  copyToClipboard(getSignatureHTML(), false)
+    .then(() => showToast('📋 HTML copiado! Cole no campo de assinatura do seu e-mail.'))
+    .catch(() => showToast('📋 HTML copiado!'));
 }
 
 function copySignature() {
   if (!requireSchool()) return;
-  const html = getSignatureHTML();
-  try {
-    const blob = new Blob([html], { type: 'text/html' });
-    navigator.clipboard.write([new ClipboardItem({ 'text/html': blob })]).then(() => {
-      showToast('✅ Assinatura copiada! Cole diretamente no cliente de e-mail.');
-    });
-  } catch {
-    navigator.clipboard.writeText(html).then(() => showToast('📋 HTML copiado.'));
-  }
+  copyToClipboard(getSignatureHTML(), true)
+    .then(() => showToast('✅ Assinatura copiada! Cole diretamente no cliente de e-mail.'))
+    .catch(() => showToast('📋 Assinatura copiada!'));
 }
 
 function downloadPNG() {
   const escola = document.getElementById('in-escola').value || 'escolapias';
+
+  if (typeof html2canvas === 'undefined') {
+    showToast('⚠️ Carregando bibliotecas, tente novamente.', '#3a1e1e', '#6a2d2d', '#f88888');
+    return;
+  }
+
+  showToast('⏳ Gerando imagem...', '#1a2a3a', '#2d4a6a', '#7ab0f8');
+
   html2canvas(document.getElementById('signature-preview'), {
-    scale: 2, useCORS: true, allowTaint: true
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: null
   }).then(canvas => {
     const a = document.createElement('a');
     a.download = 'assinatura-' + escola + '.png';
     a.href = canvas.toDataURL('image/png');
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+    showToast('✅ Imagem salva!');
+  }).catch(err => {
+    console.error(err);
+    showToast('❌ Erro ao gerar imagem.', '#3a1e1e', '#6a2d2d', '#f88888');
   });
 }
 
